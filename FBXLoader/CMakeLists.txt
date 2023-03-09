@@ -15,9 +15,9 @@ set_target_properties(${FBXProjectName} PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${PR
 
 # 2 target_link_libraries(${ProjectName} PUBLIC "library\\FbxSDK\\lib\\vs2017\\x64\\debug" )
 target_link_libraries(${FBXProjectName} PUBLIC 
-${PROJECT_SOURCE_DIR}\\library\\FbxSDK\\lib\\vs2017\\x64\\debug\\libfbxsdk-md.lib  
-${PROJECT_SOURCE_DIR}\\library\\FbxSDK\\lib\\vs2017\\x64\\debug\\libxml2-md.lib 
-${PROJECT_SOURCE_DIR}\\library\\FbxSDK\\lib\\vs2017\\x64\\debug\\zlib-md.lib)
+${PROJECT_BINARY_DIR}/library/FbxSDK/lib/vs2017/x64/debug/libfbxsdk-md.lib  
+${PROJECT_BINARY_DIR}/library/FbxSDK/lib/vs2017/x64/debug/libxml2-md.lib 
+${PROJECT_BINARY_DIR}/library/FbxSDK/lib/vs2017/x64/debug/zlib-md.lib)
 
 include_directories("library\\FbxSDK\\include")
 
