@@ -1,10 +1,15 @@
-#include "SceneBoardDataBuilder.h"
+﻿#include "SceneBoardDataBuilder.h"
 #include "BoundingMath.h"
 #include "SceneObject.h"
 
 using namespace std;
 
 SceneBoardDataBuilder::SceneBoardDataBuilder()
+	:
+	m_skinDataConnector(nullptr),
+	m_skinData(nullptr),
+	m_boardData(nullptr),
+	m_isNewSkinData(false)
 {
 }
 
@@ -44,7 +49,6 @@ void SceneBoardDataBuilder::update()
 	{
 		loadNewSkin();
 		m_skinDataConnector->IsNewSkin = false;
-		m_isNewSkinData = true;
 	}
 
 	// Using GameBoardCurrentStatus data, build new SceneObjects instances
@@ -54,49 +58,57 @@ void SceneBoardDataBuilder::update()
 void SceneBoardDataBuilder::loadNewSkin()
 {
 	m_skinData = m_skinDataConnector->SkinObjectData;
-	
+	assert(m_skinData);
+
 	// For some skin's SceneObjects we need to make a bkup for their Instance data
-	vector<SceneObject*> lSceneObjects;
-	
+	vector<SceneObject*> sceneObjects;
+
 	// we need do it for: Skin Digits
-	m_skinData->getScore_digits(lSceneObjects);
-	for (auto& so : lSceneObjects)
+	m_skinData->getScore_digits(sceneObjects);
+	for (auto& so : sceneObjects)
 		so->makeInstancesBkup();
 	
 	// ... for Skin Left part
-	lSceneObjects.clear();
-	m_skinData->getBoard_leftPart(lSceneObjects);
-	for (auto& so : lSceneObjects)
+	sceneObjects.clear();
+	m_skinData->getBoard_leftPart(sceneObjects);
+	for (auto& so : sceneObjects)
 		so->makeInstancesBkup();
 
 	// ... for Skin Right part
-	lSceneObjects.clear();
-	m_skinData->getBoard_rightPart(lSceneObjects);
-	for (auto& so : lSceneObjects)
+	sceneObjects.clear();
+	m_skinData->getBoard_rightPart(sceneObjects);
+	for (auto& so : sceneObjects)
 		so->makeInstancesBkup();
 
 	// ... for Skin Middle part
-	lSceneObjects.clear();
-	m_skinData->getBoard_middlePart(lSceneObjects);
-	for (auto& so : lSceneObjects)
+	sceneObjects.clear();
+	m_skinData->getBoard_middlePart(sceneObjects);
+	for (auto& so : sceneObjects)
 		so->makeInstancesBkup();
 
 	// ... for Skin Pick
-	lSceneObjects.clear();
-	m_skinData->getBoard_pick(lSceneObjects);
-	for (auto& so : lSceneObjects)
+	sceneObjects.clear();
+	m_skinData->getBoard_pick(sceneObjects);
+	for (auto& so : sceneObjects)
 		so->makeInstancesBkup();
+
+	m_isNewSkinData = true;
 }
 
 void SceneBoardDataBuilder::builScenedBoardData()
 {
+	/*
+	*	Using Skin and Board data builds fuill Skinned board data every turn
+	*/
+
 	// TEMP CREATION
+	if (!m_skinData)
+		return;
 
-	vector<SceneObject*> lSceneObjects;
+	vector<SceneObject*> sceneObjects;
 
-	lSceneObjects.clear();
-	m_skinData->getBoard_leftPart(lSceneObjects);
-	for (auto& so : lSceneObjects)
+	m_skinData->getBoard_leftPart(sceneObjects);
+	for (auto& so : sceneObjects)
 	{
 		_BuildTranslationMatrix(*so);
 
@@ -110,8 +122,6 @@ void SceneBoardDataBuilder::builScenedBoardData()
 				InstanceData instancesBkup2 = {};
 
 				instancesBkup2.MaterialId = instancesBkup->MaterialId;
-				instancesBkup2.WorldMatrix = instancesBkup->WorldMatrix;
-
 				instancesBkup2.WorldMatrix = _GetDirectionalMatrix( row - 5, 0, col - 5);
 				so->addInstance(instancesBkup2);
 			}

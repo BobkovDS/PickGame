@@ -5,7 +5,7 @@
 class SceneBoardDataBuilder
 {
 	SkinDataConnector* m_skinDataConnector;
-	SkinObject* m_skinData;
+	SkinObject* m_skinData; // No SkinDataConnector data enough?
 	const GameBoardCurrentStatus* m_boardData;
 	bool m_isNewSkinData;
 	DirectX::XMFLOAT4X4 m_translationMatrix;

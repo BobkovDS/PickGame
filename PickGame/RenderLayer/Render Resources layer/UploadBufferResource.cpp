@@ -76,6 +76,10 @@ void UploadBufferResource::copyData(u32 elementId, BYTE* data)
 
 void UploadBufferResource::copyData(u32 elementId, u32 count, BYTE* data)
 {
+	// Nothing to copy
+	if (count == 0)
+		return;
+
 	assert(elementId < m_elementCount);
 	if (count <= m_elementCount)
 		memcpy(

@@ -13,14 +13,20 @@ SceneEnvironmentLoader::~SceneEnvironmentLoader()
 		delete m_loader;
 }
 
-void SceneEnvironmentLoader::loadSceneEnvironmentFiles(std::vector<SceneEnvironment*>& sceneEnvironments,
+void SceneEnvironmentLoader::loadSceneEnvironmentFiles(
+	std::vector<std::unique_ptr<SceneEnvironment>> &sceneEnvironments,
 	ResourceManager* resourceManager)
 {
-	if (m_loader)
-	{
-		SceneEnvironment* newSceneEnvironment = new SceneEnvironment(); // will be deleted by SceneEnvironmentManager
+	/*TODO: Here should be automatic loading existing skin list, so some skin_list_builder
+	*/
 
-		m_loader->loadFile("default_sceneenv.fbx");
-		sceneEnvironments.push_back(newSceneEnvironment);
-	}
+	std::unique_ptr <SceneEnvironment> newSceneEnvironment;
+	newSceneEnvironment.reset(new SceneEnvironment());
+
+	m_loader->loadFile("default_sceneenv.fbx");
+		
+	if (!m_loader->IsSuccessful())
+		return;
+
+	sceneEnvironments.push_back(std::move(newSceneEnvironment));
 }

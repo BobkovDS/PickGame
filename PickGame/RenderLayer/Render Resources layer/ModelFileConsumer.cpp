@@ -140,7 +140,7 @@ void ModelFileConsumer::consume(ModelFileLoader* fileLoader)
 bool ModelFileConsumer::writeToDevice()
 {
 	//Write to Skin
-	
+
 	// Write Textures
 	std::map<u32, u32> textureGPUIDById;
 	textureGPUIDById.clear();
@@ -155,7 +155,7 @@ bool ModelFileConsumer::writeToDevice()
 		auto texturePath = _loader->texture(i);
 		textureGPUIDById[i] = texturePack->addTexturePath(texturePath);
 	}
-	
+
 	texturePack->buildTextureFileNameList();
 	texturePack->loadTexturesToGPU();
 

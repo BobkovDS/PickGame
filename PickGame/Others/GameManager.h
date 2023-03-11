@@ -16,7 +16,7 @@ class Camera;
 class GameManager
 {
 	GPUCanvas m_gpuCanvas;
-	
+
 	GameBoard m_gameBoard;
 	GameRoundTaskCreater m_taskCreater;
 	SceneDataBuilder m_sceneDataBuilder;

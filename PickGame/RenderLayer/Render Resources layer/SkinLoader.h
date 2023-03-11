@@ -12,5 +12,5 @@ public:
 	SkinLoader();
 	~SkinLoader();
 
-	void loadSkinFiles(std::vector<SkinObject*>&, ResourceManager* resourceManager);
+	void loadSkinFiles(std::vector<std::unique_ptr<SkinObject>>&, ResourceManager* resourceManager);
 };

@@ -73,7 +73,7 @@ void Logger::nonStaticlog(const std::string& msg, u8 shiftCount)
 #if defined(_DEBUG)
 	if (m_logFile)
 	{
-		// If this msg should be in a block and this msg is a first msg in a block
+		// If this msg should be in a block and this msg is a first msg in the block
 		// lets print this block
 		if (m_block.TextBlockFlag && m_block.NewBlockFlag)
 		{

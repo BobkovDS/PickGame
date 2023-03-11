@@ -19,7 +19,7 @@ void SceneObjectsHolder::addObject(SceneObject* object)
 void SceneObjectsHolder::addObjectToLayer(LayerType type, SceneObject* object)
 {
 	m_layers[type].addSceneObject(object);
-	
+
 	for (u32 tag : object->getTags())
 	{
 		m_tagContainer.addObjectByTag(tag, object);

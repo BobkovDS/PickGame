@@ -30,6 +30,6 @@ public:
 
 struct SkinDataConnector
 {
-	bool IsNewSkin;
-	SkinObject* SkinObjectData;
+	bool IsNewSkin = false;
+	SkinObject* SkinObjectData = nullptr;
 };

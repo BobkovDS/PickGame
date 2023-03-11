@@ -3,7 +3,7 @@
 class SceneEnvironmentManager
 {
 	SceneEnvironmentConnector m_connector;
-	std::vector<SceneEnvironment*> m_sceneEnvironments;
+	std::vector<std::unique_ptr<SceneEnvironment>> m_sceneEnvironments;
 	SceneEnvironmentLoader m_loader;
 public:
 	SceneEnvironmentManager();

@@ -18,10 +18,18 @@ enum class TEXTURE_TYPE
 
 class ModelFileLoader
 {
+public:
+	enum class FileLoadStatus : char
+	{
+		None = 1,
+		Ok,
+		Failed
+	};
+
 protected:
 	
 	std::string m_sceneName;
-	bool m_goodStatus;
+	FileLoadStatus _loadStatus;
 
 	template<typename T, typename C>
 	const T* data(int i, const C& c) const
@@ -49,7 +57,7 @@ protected:
 
 public:
 
-	ModelFileLoader() :m_goodStatus(false) {}
+	ModelFileLoader() :_loadStatus(FileLoadStatus::Ok) {}
 
 	virtual void loadFile(const std::string& skinFileName) = 0;
 	virtual void prepare() {};
@@ -59,7 +67,7 @@ public:
 	virtual u32 texturesCount() const = 0;
 	virtual ~ModelFileLoader() {}
 
-	bool isGood() const { return m_goodStatus; }
+	bool IsSuccessful() const { return _loadStatus == FileLoadStatus::None; }
 	std::string sceneName()const { return m_sceneName; }
 };
 

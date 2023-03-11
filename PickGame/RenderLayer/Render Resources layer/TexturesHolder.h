@@ -58,8 +58,9 @@ class DXGILayer;
 class TexturesHolder
 {
 	winrt::com_ptr<ID3D12DescriptorHeap> m_SRVHeap;
+
 	std::map<u16, TexturePack*> m_packs;
-	u16 m_packsCount;
+	u16 _nextPackId;
 	DXGILayer* m_dxgiLayer;
 
 	COPY_FORBID(TexturesHolder)
@@ -76,7 +77,7 @@ public:
 
 	ID3D12DescriptorHeap* getSRVHeap()
 	{
-		assert(m_SRVHeap.get());
+		//assert(m_SRVHeap.get());
 		return m_SRVHeap.get();
 	}
 };

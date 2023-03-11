@@ -74,22 +74,28 @@ void SceneDataBuilder::updateGPUData_()
 
 	std::vector<InstanceData> instances;
 
-	for (u8 layerID = 0; layerID < LayerType::LT_COUNT; layerID++)
+	for (u8 layerID = LayerType::LT_opaque; layerID < LayerType::LT_COUNT; layerID++)
 	{
-		LayerType layer = LayerType(layerID);
+		auto layer = LayerType(layerID);
 		u32 instanceCountPerLayer = 0;
 		// At first read Environment's Instances (TODO: Make this reading only once)
 		{
-			auto layerData = m_sceneEnvConnector->SceneEnvData->getObjectsHolder().getLayer(layer);
-			if (layerData)
-				instanceCountPerLayer += layerData->provideInstances(instances);
+			if (m_sceneEnvConnector->SceneEnvData)
+			{
+				auto layerData = m_sceneEnvConnector->SceneEnvData->getObjectsHolder().getLayer(layer);
+				if (layerData)
+					instanceCountPerLayer += layerData->provideInstances(instances);
+			}
 		}
 
 		// And then read Board's Instances (TODO: Make this reading only once)
 		{
-			auto layerData = m_skinnedBoardData.getSkinData()->getObjectsHolder().getLayer(layer);
-			if (layerData)
-				instanceCountPerLayer += layerData->provideInstances(instances);
+			if (m_skinnedBoardData.getSkinData())
+			{
+				auto layerData = m_skinnedBoardData.getSkinData()->getObjectsHolder().getLayer(layer);
+				if (layerData)
+					instanceCountPerLayer += layerData->provideInstances(instances);
+			}
 		}
 	}
 

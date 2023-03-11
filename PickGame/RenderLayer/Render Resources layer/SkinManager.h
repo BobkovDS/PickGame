@@ -3,7 +3,7 @@
 
 class SkinManager
 {
-	std::vector<SkinObject*> m_skins;
+	std::vector<std::unique_ptr<SkinObject>> m_skins;
 	SkinLoader m_loader;
 	SkinDataConnector m_connector;
 

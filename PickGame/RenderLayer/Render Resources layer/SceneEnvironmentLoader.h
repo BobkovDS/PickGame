@@ -13,5 +13,7 @@ public:
 	SceneEnvironmentLoader();
 	~SceneEnvironmentLoader();
 
-	void loadSceneEnvironmentFiles(std::vector<SceneEnvironment*>& sceneEnvironments, ResourceManager* resourceManager);
+	void loadSceneEnvironmentFiles(
+		std::vector<std::unique_ptr<SceneEnvironment>> &sceneEnvironments,
+		ResourceManager* resourceManager);
 };

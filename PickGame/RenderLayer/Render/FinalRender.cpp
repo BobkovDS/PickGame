@@ -1,4 +1,4 @@
-#include "FinalRender.h"
+﻿#include "FinalRender.h"
 #include "RenderTargetSwapChain.h"
 #include "..\Render Resources layer\PSOObject.h"
 #include "..\Render Resources layer\ResourceManager.h"
@@ -36,8 +36,13 @@ void FinalRender::draw(u32 flags)
 
 	m_cmdList->SetGraphicsRootSignature(m_PSOObject->getRootSignauture());
 
+	// TODO: Воеменное решение. При отсуствии SRV надо что то придумать
 	ID3D12DescriptorHeap* descriptorHeaps[] = { m_resourceManager->getTextureHolder()->getSRVHeap() };
-	m_cmdList->SetDescriptorHeaps(1, descriptorHeaps);
+	if (m_resourceManager->getTextureHolder()->getSRVHeap())
+	{
+		m_cmdList->SetDescriptorHeaps(1, descriptorHeaps);
+	}	
+	
 
 	u32 techFlags = 0;
 	m_cmdList->SetGraphicsRoot32BitConstant(0, techFlags, 1); // Technical Flags
@@ -56,8 +61,9 @@ void FinalRender::draw(u32 flags)
 	m_cmdList->SetGraphicsRootConstantBufferView(4,
 		m_resourceManager->getFrameResourceManager()->getMainPassCB()->getResource()->GetGPUVirtualAddress());
 
-	m_cmdList->SetGraphicsRootDescriptorTable(5,
-		m_resourceManager->getTextureHolder()->getSRVHeap()->GetGPUDescriptorHandleForHeapStart());
+	if (m_resourceManager->getTextureHolder()->getSRVHeap())
+		m_cmdList->SetGraphicsRootDescriptorTable(5,
+			m_resourceManager->getTextureHolder()->getSRVHeap()->GetGPUDescriptorHandleForHeapStart());
 
 	RenderBase::draw(flags);
 }

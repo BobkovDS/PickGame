@@ -59,7 +59,7 @@ void RenderResource::create(
 void RenderResource::resize(u16 width, u16 height)
 {
 	assert(m_spDevice != nullptr);
-	
+
 	m_gpu_resource = nullptr; // TODO: Is it enough to release a memory?
 	
 	create(m_description.Format, m_description.Flags, width, height, &m_description.SampleDesc, &m_optClear,

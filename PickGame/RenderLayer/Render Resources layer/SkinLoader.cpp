@@ -17,21 +17,27 @@ SkinLoader::~SkinLoader()
 		delete m_loader;
 }
 
-void SkinLoader::loadSkinFiles(vector<SkinObject*>& skins, ResourceManager* resourceManager)
+void SkinLoader::loadSkinFiles(std::vector<std::unique_ptr<SkinObject>> &skins, ResourceManager* resourceManager)
 {
+	/*TODO: Here should be automatic loading existing skin list, so some skin_list_builder
+	*/
 	if (m_loader)
 	{
 		resourceManager->resetWorkCmdList();
 
-		SkinObject* newSkin = new SkinObject(); // The skin will be deleted by SkinManager
+		std::unique_ptr<SkinObject> newSkin;
+		newSkin.reset(new SkinObject());
 
 		m_loader->loadFile("g:/SSDLaba/Programming/DirectX/PickGame/Models/default_skin.pgf");
 
-		ModelFileConsumer modelFileConsumer(resourceManager, newSkin);
+		if (!m_loader->IsSuccessful())
+			return;
+
+		ModelFileConsumer modelFileConsumer(resourceManager, newSkin.get());
 		modelFileConsumer.consume(m_loader);
 		modelFileConsumer.writeToDevice();
 
-		skins.push_back(newSkin);
+		skins.push_back(std::move(newSkin));
 
 		resourceManager->executeWorkCmdList();
 	}

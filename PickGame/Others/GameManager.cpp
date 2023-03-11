@@ -19,8 +19,7 @@ void GameManager::build(HINSTANCE hInstance)
 	m_rulesPoliciesMngr.loadPolicies("RulesPolicies");
 	m_taskCreater.buildGameRoundTask(m_rulesPoliciesMngr.getPolicy(1));
 	m_gameBoard.buildBoard(*m_taskCreater.getGameRoundTask());
-	
-	
+
 	const GameBoardCurrentStatus* boardData = m_gameBoard.getCurrentGameData();
 	m_gameBoard.makeTurn();
 
@@ -68,7 +67,7 @@ void GameManager::build(HINSTANCE hInstance)
 	m_ioManager.initialize(&m_gpuCanvas);
 	m_ioManager.setCamera(m_camera);
 
-	// Run Game Loop 
+	// Run Game Loop
 	m_gpuCanvas.run(); // NO CODE AFTER THIS!!!
 }
 

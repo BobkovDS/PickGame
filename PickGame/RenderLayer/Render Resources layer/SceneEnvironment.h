@@ -12,8 +12,8 @@ public:
 
 	void setMaterialPackId(u16 packId) { m_materialPackId = packId; }
 	void setTexturePackId(u16 packId) { m_texturePackId = packId; }
-	u16 getMaterialPackId() { return m_materialPackId; }
-	u16 getTexturePackId() { return m_texturePackId; }
+	u16 getMaterialPackId() const { return m_materialPackId; }
+	u16 getTexturePackId() const { return m_texturePackId; }
 
 	SceneObjectsHolder& getObjectsHolder();
 	void getAnimatedObjects(std::vector<SceneObject*>& objects);
@@ -21,6 +21,6 @@ public:
 
 struct SceneEnvironmentConnector
 {
-	bool IsNewData;
-	SceneEnvironment* SceneEnvData;
+	bool IsNewData = false;
+	SceneEnvironment* SceneEnvData = nullptr;
 };

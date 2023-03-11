@@ -21,9 +21,9 @@ void SceneEnvironmentManager::loadSceneEnvironments(ResourceManager* resourceMan
 
 void SceneEnvironmentManager::setSceneEnvironment(u8 env_id)
 {
-	if (m_sceneEnvironments.size() > 0)
-		env_id %= m_sceneEnvironments.size();
-	
-	m_connector.SceneEnvData = m_sceneEnvironments[env_id];
+	if (m_sceneEnvironments.empty() || env_id >= m_sceneEnvironments.size())
+		return;
+
+	m_connector.SceneEnvData = m_sceneEnvironments[env_id].get();
 	m_connector.IsNewData = true;
 }

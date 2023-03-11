@@ -7,10 +7,10 @@ SkinManager::SkinManager()
 
 SkinManager::~SkinManager()
 {
-	for (SkinObject* skin : m_skins)
-		delete skin;
-	
-	m_skins.clear();
+	//for (SkinObject* skin : m_skins)
+	//	delete skin;
+	//
+	//m_skins.clear();
 }
 
 void SkinManager::loadSkins(ResourceManager* resourceManager)
@@ -21,10 +21,10 @@ void SkinManager::loadSkins(ResourceManager* resourceManager)
 
 void SkinManager::setSkin(u8 skin_id)
 {
-	if (m_skins.size() > 0)
-		skin_id %= m_skins.size();
+	if (m_skins.empty() || skin_id >= m_skins.size())
+		return;
 
-	m_connector.SkinObjectData = m_skins[skin_id];
+	m_connector.SkinObjectData = m_skins[skin_id].get();
 	m_connector.IsNewSkin = true;
 }
 

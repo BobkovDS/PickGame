@@ -86,7 +86,7 @@ void TexturePack::loadTexturesToGPU()
 // ------------------------------------------------------ -----------------------------------
 
 TexturesHolder::TexturesHolder():
-	m_packsCount(0)
+	_nextPackId(0)
 {
 }
 
@@ -105,12 +105,12 @@ void TexturesHolder::initialize(DXGILayer* dxgiLayer)
 
 u16 TexturesHolder::newPack()
 {
-	auto it = m_packs.find(m_packsCount);
-	assert(it == m_packs.end());
+	// Just to be sure  that we do not have the pack with id = _nextPackId;
+	assert(!getPack(_nextPackId));
 
-	m_packs[m_packsCount++] = new TexturePack();
+	m_packs[_nextPackId++] = new TexturePack();
 
-	return m_packsCount - 1;
+	return _nextPackId - 1;
 }
 
 TexturePack* TexturesHolder::getPack(u16 packId)

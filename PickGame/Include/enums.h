@@ -10,7 +10,7 @@ enum SceneObjectType
 	SOT_Sky = 'sky'
 };
 
-enum LayerType
+enum LayerType: u8
 {
 	LT_opaque = 0,
 	LT_transparent,

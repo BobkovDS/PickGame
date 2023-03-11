@@ -1,12 +1,10 @@
 #pragma once
 #include "..\..\Include\ModelFileLoader.h"
 
-class ModelFileLoader;
 class ResourceManager;
 class SceneObject;
 class SkinObject;
 class PGFFileLoader;
-
 
 class ModelFileConsumer: public ModelDataConsumer
 {
