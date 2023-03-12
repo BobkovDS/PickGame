@@ -120,9 +120,7 @@ void PGFFileLoader::readMeshData()
 	char dataID[11] = { 0 };
 	m_modelFile.read(dataID, 10);
 
-	string sDataID(dataID);
-	assert(sDataID == "MESH******");
-	
+	assert(string(dataID) == "MESH******");
 
 	union reader
 	{
@@ -132,10 +130,9 @@ void PGFFileLoader::readMeshData()
 
 	m_modelFile.read(r.buffer, 4);
 
-	u32 meshCount = r.count;
-	m_meshes.resize(meshCount);
-	
-	Logger::logln("Reading Meshes ["+ std::to_string(meshCount) +"]");
+	m_meshes.resize(r.count);
+
+	Logger::logln("Reading Meshes ["+ std::to_string(r.count) +"]");
 
 	for (auto& mesh : m_meshes)
 	{
@@ -148,8 +145,7 @@ void PGFFileLoader::readMaterialData()
 	char dataID[11] = { 0 };
 	m_modelFile.read(dataID, 10);
 
-	string sDataID(dataID);
-	assert(sDataID == "MATERIALS*");
+	assert(string(dataID) == "MATERIALS*");
 
 	union reader
 	{
@@ -159,10 +155,9 @@ void PGFFileLoader::readMaterialData()
 
 	m_modelFile.read(r.buffer, 4);
 
-	u32 materialCount = r.count;
-	m_materials.resize(materialCount);
+	m_materials.resize(r.count);
 
-	Logger::logln("Reading Materials [" + std::to_string(materialCount) + "]");
+	Logger::logln("Reading Materials [" + std::to_string(r.count) + "]");
 
 	for (auto& material : m_materials)
 	{
@@ -175,8 +170,7 @@ void PGFFileLoader::readInstancesData()
 	char dataID[11] = { 0 };
 	m_modelFile.read(dataID, 10);
 
-	string sDataID(dataID);
-	assert(sDataID == "INSTANCES*");
+	assert(string(dataID) == "INSTANCES*");
 
 	union reader
 	{
@@ -186,11 +180,9 @@ void PGFFileLoader::readInstancesData()
 
 	m_modelFile.read(r.buffer, 4);
 
-	u32 instancesCount = r.count;
+	Logger::logln("Reading Instances [" + std::to_string(r.count) + "]");
 
-	Logger::logln("Reading Instances [" + std::to_string(instancesCount) + "]");
-
-	for (u32 i = 0; i < instancesCount; i++)
+	for (u32 i = 0; i < r.count; i++)
 	{
 		Instance instance;
 		m_modelFile >> InstanceReader(&instance);
@@ -203,8 +195,7 @@ void PGFFileLoader::readTextureData()
 	char dataID[11] = { 0 };
 	m_modelFile.read(dataID, 10);
 
-	string sDataID(dataID);
-	assert(sDataID == "TEXTURES**");
+	assert(string(dataID) == "TEXTURES**");
 
 	union reader
 	{
@@ -214,10 +205,9 @@ void PGFFileLoader::readTextureData()
 
 	m_modelFile.read(r.buffer, 4);
 
-	u32 textureCount = r.count;
-	m_textures.resize(textureCount);
+	m_textures.resize(r.count);
 
-	Logger::logln("Reading Textures [" + std::to_string(textureCount) + "]");
+	Logger::logln("Reading Textures [" + std::to_string(r.count) + "]");
 
 	for (auto& texture: m_textures)
 		readString(m_modelFile, texture);
@@ -410,6 +400,8 @@ void PGFFileLoader::loadFile(const std::string& fileName)
 		readTextureData();
 		readMaterialData();
 		readInstancesData();
+	
+		_loadStatus = FileLoadStatus::Ok;
 	}
 	else
 	{

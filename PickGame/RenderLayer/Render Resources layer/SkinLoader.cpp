@@ -28,7 +28,7 @@ void SkinLoader::loadSkinFiles(std::vector<std::unique_ptr<SkinObject>> &skins, 
 		std::unique_ptr<SkinObject> newSkin;
 		newSkin.reset(new SkinObject());
 
-		m_loader->loadFile("g:/SSDLaba/Programming/DirectX/PickGame/Models/default_skin.pgf");
+		m_loader->loadFile("d:/Laba/Modeling/Programming/Games/PickGame/GamePack/for_engine/def_box.pgf");
 
 		if (!m_loader->IsSuccessful())
 			return;

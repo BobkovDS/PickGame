@@ -1,6 +1,6 @@
 #include "Logger.h"
 
-Logger Logger::m_logger("fbxLoaderLogger.txt");
+//Logger Logger::m_logger("fbxLoaderLogger.txt");
 
 u8 LogAutoInc::Shift = 0;
 bool Logger::m_newLineFlag = false;
@@ -92,7 +92,7 @@ void Logger::nonStaticlog(const std::string& msg, u8 shiftCount)
 		m_logFile << msg.c_str();
 
 		if (m_newLineFlag)
-			m_logFile << std::endl;
+			m_logFile << "  " << std::endl;
 		
 		m_logFile << std::flush;
 		

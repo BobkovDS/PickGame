@@ -70,7 +70,6 @@ bool FBXDataConsumer::writeToDevice()
 
 	if (prepareOutputFile_())
 	{
-		auto name = m_loader->sceneName();
 		writeMeshes_();
 
 		writeMaterials_();

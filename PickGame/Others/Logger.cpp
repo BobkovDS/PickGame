@@ -90,7 +90,7 @@ void Logger::nonStaticlog(const std::string& msg, u8 shiftCount)
 		m_logFile << msg.c_str();
 
 		if (m_newLineFlag)
-			m_logFile << std::endl;
+			m_logFile << "  " << std::endl;
 		
 		m_logFile << std::flush;
 		

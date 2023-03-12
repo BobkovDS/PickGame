@@ -3,14 +3,15 @@
 #include "FBXFileLoader.h"
 #include "FBXDataConsumer.h"
 
-//Logger Logger::m_logger("LogFile");
+Logger Logger::m_logger("fbxLoaderLogger.md");
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd)
 {
 	FBXFileLoader loader;
-	loader.loadFile("g:/SSDLaba/Programming/DirectX/PickGame/Models/default_skin.fbx");
+	loader.loadFile("d:/Laba/Modeling/Programming/Games/PickGame/GamePack/Models/Skins/Default_skin/def_box.fbx");
 
-	if (loader.isGood())
+
+	if (loader.IsSuccessful())
 	{
 		FBXDataConsumer consumer;
 		consumer.consume(&loader);

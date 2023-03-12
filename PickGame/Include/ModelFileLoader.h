@@ -57,7 +57,7 @@ protected:
 
 public:
 
-	ModelFileLoader() :_loadStatus(FileLoadStatus::Ok) {}
+	ModelFileLoader() :_loadStatus(FileLoadStatus::None) {}
 
 	virtual void loadFile(const std::string& skinFileName) = 0;
 	virtual void prepare() {};
@@ -67,7 +67,7 @@ public:
 	virtual u32 texturesCount() const = 0;
 	virtual ~ModelFileLoader() {}
 
-	bool IsSuccessful() const { return _loadStatus == FileLoadStatus::None; }
+	bool IsSuccessful() const { return _loadStatus == FileLoadStatus::Ok; }
 	std::string sceneName()const { return m_sceneName; }
 };
 

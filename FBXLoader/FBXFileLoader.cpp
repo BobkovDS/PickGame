@@ -32,7 +32,7 @@ void FBXFileLoader::loadFile(const string& fileName)
 	if (!lImporter->Initialize(fileName.c_str(), -1, sdkManager->GetIOSettings()))
 	{
 		Logger::errorMsg("faild");
-		Logger::log("Call to FbxImporter::Initialize() is failed with the next error: ");
+		Logger::log("FbxImporter::Initialize() is failed with the next error: ");
 		//LogAutoInc inc;
 		Logger::errorMsg(string(lImporter->GetStatus().GetErrorString()));
 		return;
@@ -67,7 +67,7 @@ void FBXFileLoader::loadFile(const string& fileName)
 	m_sceneName = sceneName;
 	createScene();
 
-	m_goodStatus = true;
+	_loadStatus = FileLoadStatus::Ok;
 	Logger::logln("Loading of " + fileName + " is done");
 }
 
@@ -289,8 +289,6 @@ void FBXFileLoader::processNodeMesh(FBXSDK_NAMESPACE::FbxNode* pNode, FBXFileLoa
 	readMeshInfo(pMesh, newMesh);
 	
 	convertFBXMatrixToFloat4X4(pNode->EvaluateGlobalTransform(), inst.GlobalTransformation);
-
-
 }
 
 void FBXFileLoader::processNodeCamera(FBXSDK_NAMESPACE::FbxNode* pNode, FBXFileLoader::Instance& inst)
@@ -342,7 +340,7 @@ void FBXFileLoader::readMaterialDefaultProperties(FbxSurfacePhong* phongMaterial
 	{
 		D4toF4 d4tof4(phongMaterial->TransparentColor.Get().Buffer(), phongMaterial->TransparencyFactor);
 		material.TransparencyColor = d4tof4.toF4();
-		material.isTransparent =
+		material.isTransparent = // TODO: Wrong if some .xyz is -INF
 			!(material.TransparencyColor.x == material.TransparencyColor.y == material.TransparencyColor.z);
 
 		material.isTransparencyUsed =
@@ -386,8 +384,8 @@ bool FBXFileLoader::readMeshInfo(FbxMesh* pMesh, Mesh& newMesh, bool tessellated
 
 	// Copy all Vertices
 	auto vertexData = pMesh->GetControlPoints();
-	int vertexCount = pMesh->GetControlPointsCount();
-	
+	auto vertexCount = pMesh->GetControlPointsCount();
+
 	newMesh.Vertices.resize(vertexCount);
 	for (int i = 0; i < vertexCount; i++, vertexData++)
 		newMesh.Vertices[i] = DirectX::XMFLOAT3(vertexData->mData[0], vertexData->mData[1], vertexData->mData[2]);

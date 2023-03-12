@@ -233,7 +233,7 @@ public:
 	struct Material
 	{
 		std::string Name;
-		int MatCBIndex;
+		int MatCBIndex; // TODO: Does we need it here?
 		DirectX::XMFLOAT4 DiffuseAlbedo;
 		DirectX::XMFLOAT4 Specular;
 		DirectX::XMFLOAT4 TransparencyColor;
