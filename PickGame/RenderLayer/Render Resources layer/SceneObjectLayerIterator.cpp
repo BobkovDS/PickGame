@@ -12,6 +12,7 @@ SceneObjectLayerIterator::~SceneObjectLayerIterator()
 
 void SceneObjectLayerIterator::addSceneObjectsHolder(SceneObjectsHolder* sceneObjectsHolder)
 {
+	assert(sceneObjectsHolder);
 	m_objectsHolders.push_back(sceneObjectsHolder);
 }
 

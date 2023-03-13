@@ -116,13 +116,13 @@ void SceneBoardDataBuilder::builScenedBoardData()
 		auto instancesBkup = so->getInstanceBkup();
 		so->addInstance(*instancesBkup);
 
-		for (u8 row =0; row < 100; row++)
-			for (u8 col = 0; col < 100; col++)
+		for (u8 row =0; row < 2; row++)
+			for (u8 col = 0; col < 2; col++)
 			{
 				InstanceData instancesBkup2 = {};
 
 				instancesBkup2.MaterialId = instancesBkup->MaterialId;
-				instancesBkup2.WorldMatrix = _GetDirectionalMatrix( row - 5, 0, col - 5);
+				instancesBkup2.WorldMatrix = _GetDirectionalMatrix( row - 1, 0, col - 1);
 				so->addInstance(instancesBkup2);
 			}
 	}

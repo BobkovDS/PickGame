@@ -75,7 +75,7 @@ void GameManager::buildCamera()
 {
 	m_camera = new Camera();
 
-	DirectX::XMVECTOR pos = DirectX::XMVectorSet(10.0f, 15.0f, 5.0f, 1.0f);
+	DirectX::XMVECTOR pos = DirectX::XMVectorSet(1.0f, 1.5f, 0.5f, 1.0f);
 	DirectX::XMVECTOR target = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f);
 	DirectX::XMVECTOR up = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 

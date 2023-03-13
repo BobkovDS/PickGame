@@ -50,8 +50,12 @@ void SceneDataBuilder::update()
 		updateSRVData_();
 
 		m_iterator.clear();
-		m_iterator.addSceneObjectsHolder(&m_sceneEnvConnector->SceneEnvData->getObjectsHolder());
-		m_iterator.addSceneObjectsHolder(&m_skinnedBoardData.getSkinData()->getObjectsHolder());
+		if (m_sceneEnvConnector->SceneEnvData)
+			m_iterator.addSceneObjectsHolder(&m_sceneEnvConnector->SceneEnvData->getObjectsHolder());
+
+		if (m_skinnedBoardData.getSkinData())
+			m_iterator.addSceneObjectsHolder(&m_skinnedBoardData.getSkinData()->getObjectsHolder());
+
 		m_iterator.build();
 
 		m_sceneEnvConnector->IsNewData = false;
@@ -113,6 +117,6 @@ void SceneDataBuilder::updateSRVData_()
 	*/
 
 	m_resourceManager->getTextureHolder()->joinSRVs(
-		m_sceneEnvConnector->SceneEnvData->getTexturePackId(),
-		m_skinnedBoardData.getSkinData()->getTexturePackId());
+		m_sceneEnvConnector->SceneEnvData ? m_sceneEnvConnector->SceneEnvData->getTexturePackId() : 0xFF,
+		m_skinnedBoardData.getSkinData() ? m_skinnedBoardData.getSkinData()->getTexturePackId() : 0xFF);
 }
